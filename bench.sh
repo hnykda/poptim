@@ -1,7 +1,7 @@
 set -e
 set -x
 
-DCMD="docker run -ti -v $(pwd)/benchouts:/outs --security-opt seccomp=unconfined --entrypoint /bin/sh "
+DCMD="docker run --rm -ti -v $(pwd)/benchouts:/outs --security-opt seccomp=unconfined --entrypoint /bin/sh "
 PBCMD="pyperformance run --rigorous -o /outs"
 
 TG="poptim"
