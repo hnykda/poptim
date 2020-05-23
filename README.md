@@ -10,6 +10,9 @@ Assuming you have docker installed. Trigger the benchmark run via `sh bench.sh`.
 
 After it's finished, use the `pyperf compare_to benchouts/*.json` to compare the results.  Therefore, you need to have `pyperformance` installed (`pip install pyperformance`).
 
+### Notes
+* you really need to run docker with `--security-opt seccomp=unconfined`. Without this, the performance penalty is slowing the results up to 2x as much.
+
 # TODO
 * `poptim` image is not ready yet to be actually used as a base image, has likely many errors and stuff
 * automatic builds and triggers for all images and running the benchmark
