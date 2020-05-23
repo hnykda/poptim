@@ -4,6 +4,12 @@ set -x
 DCMD="docker run -ti -v $(pwd)/benchouts:/outs --security-opt seccomp=unconfined --entrypoint /bin/sh "
 PBCMD="pyperformance run --rigorous -o outs"
 
+TG="fedora"
+echo $TG
+docker build -f dockerfiles/$TG.df -t pyb:$TG .
+$DCMD pyb:$TG -c "${PBCMD}/$TG.json"
+
+
 TG="conda"
 echo $TG
 docker build -f dockerfiles/$TG.df -t pyb:$TG .
