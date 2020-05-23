@@ -1,0 +1,7 @@
+FROM continuumio/anaconda3
+RUN conda config --set allow_conda_downgrades true && \
+    conda install -y conda=4.6.14 && \
+    conda config --add channels conda-forge && \
+    conda create -y -n py38 python=3.8
+
+RUN /opt/conda/envs/py38/bin/pip install pyperformance
