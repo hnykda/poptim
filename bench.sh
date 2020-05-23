@@ -2,7 +2,12 @@ set -e
 set -x
 
 DCMD="docker run -ti -v $(pwd)/benchouts:/outs --security-opt seccomp=unconfined --entrypoint /bin/sh "
-PBCMD="pyperformance run --rigorous -o outs"
+PBCMD="pyperformance run --rigorous -o /outs"
+
+TG="poptim"
+echo $TG
+docker build -f dockerfiles/poptim/Dockerfile -t pyb:$TG dockerfiles/poptim
+$DCMD pyb:poptim -c "/opt/custpyt/bin/python3 -m ${PBCMD}/$TG.json"
 
 TG="fedora"
 echo $TG

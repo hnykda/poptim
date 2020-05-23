@@ -1,2 +1,2 @@
 FROM fedora:32
-RUN dnf install -y python3-pip && pip install pyperformance
+RUN dnf install -y gcc python3-pip && pip install pyperformance
