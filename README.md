@@ -13,6 +13,24 @@ After it's finished, use the `pyperf compare_to benchouts/*.json` to compare the
 ### Notes
 * you really need to run docker with `--security-opt seccomp=unconfined`. Without this, the performance penalty is slowing the results up to 2x as much.
 
+### compare_to2csv
+To get a nanosecond CSV from the `pyperf compare_to *.json --table > copy-pasted-table.csv`:
+
+
+```python
+notl = [x for x in open('copy-pasted-table.csv').readlines() if not x.startswith('+')]
+df = (pd
+.DataFrame([[a.strip() for a in x.split('|') if a] for x in notl])
+.pipe(lambda _df: _df.rename(columns=_df.iloc[0, :]))
+.set_index("Benchmark")
+.drop("Benchmark", axis=0)
+.pipe(lambda _df: _df.where(lambda x: x != "not significant", _df.iloc[:, 0], axis=0))
+.applymap(lambda x: pd.Timedelta(x.split(':')[0]).value)
+.iloc[:, :-1]
+.to_csv('results.csv')
+)
+```
+
 # TODO
 * `poptim` image is not ready yet to be actually used as a base image, has likely many errors and stuff
 * automatic builds and triggers for all images and running the benchmark
