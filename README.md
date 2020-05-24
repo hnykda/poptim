@@ -27,8 +27,10 @@ df = (pd
 .pipe(lambda _df: _df.where(lambda x: x != "not significant", _df.iloc[:, 0], axis=0))
 .applymap(lambda x: pd.Timedelta(x.split(':')[0]).value)
 .iloc[:, :-1]
-.to_csv('results.csv')
 )
+df.to_csv('results.csv')
+
+# df.apply(lambda x: x/df.loc[:, "poptim"]).mul(100).astype(int).to_csv("poptim-relative.csv")
 ```
 
 # TODO
